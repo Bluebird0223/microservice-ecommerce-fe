@@ -1,7 +1,5 @@
 # microservice-ecommerce-fe
 
-# microservice-ecommerce-be
-
 # 🛒 Microservice E-Commerce
 
 This project is a microservice-based e-commerce backend system designed for scalability, modularity, and cloud deployment (AWS-ready). It features separate services for product catalog, cart management, order processing, and payments — communicating over REST APIs and asynchronous messaging (RabbitMQ/SQS).
