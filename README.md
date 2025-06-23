@@ -1,54 +1,12 @@
-# microservice-ecommerce-fe
+# React + Vite
 
-# 🛒 Microservice E-Commerce
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This project is a microservice-based e-commerce backend system designed for scalability, modularity, and cloud deployment (AWS-ready). It features separate services for product catalog, cart management, order processing, and payments — communicating over REST APIs and asynchronous messaging (RabbitMQ/SQS).
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 📌 Architecture Overview
+## Expanding the ESLint configuration
 
-- **Catalog Service**: Manage product listings, categories, and stock levels.
-- **Cart Service**: Handle user shopping carts (session-based, using Redis).
-- **Order Service**: Manage order creation, history, and status.
-- **Payment Service**: Integrate payment gateway (mock or Razorpay).
-- **Message Broker**: RabbitMQ or AWS SQS for async order/payment flow.
-- **Database per Service**: MongoDB (or DynamoDB if AWS-first).
-
----
-
-## 🚀 Tech Stack
-
-- **React.js / Tailwind css / Redux / Vite**
-- **Node.js / Express.js**
-- **MongoDB** / DynamoDB (NoSQL)
-- **Redis** (for cart + caching)
-- **RabbitMQ / AWS SQS**
-- **Docker / Docker Compose**
-- **JWT + Bcrypt** (Auth)
-- **Swagger / Postman** (API documentation)
-
----
-
-🛡 Security
-✅ JWT Authentication
-✅ Role-Based Access Control (admin, user)
-✅ Secure API design best practices
-
-🌐 Deployment Plan
-Local: Docker Compose
-
-Cloud: AWS ECS / Fargate or EKS
-
-Use CloudFormation / Terraform for infra-as-code (future enhancement)
-
-✍ Author
-Naitik Ramteke
-
-LinkedIn:[https://link](https://www.linkedin.com/in/naitik-ramteke)
-
-
-📃 License
-MIT
-
----
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
