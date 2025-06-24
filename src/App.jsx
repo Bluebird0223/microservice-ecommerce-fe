@@ -1,39 +1,32 @@
-import { useState } from 'react'
 import './App.css'
-import { Header } from './components/Layout';
 import BottomNavBar from './components/BottomNavbar';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import HomePage from './components/Home';
+import CartPage from './components/CartPage';
+import ProductDetailsPage from './components/ProductDetailsPage';
+import OrdersPage from './components/OrdersPage';
+import SettingsPage from './components/SettingsPage';
+import ProfilePage from './components/ProfilePage';
 
-// import { Provider } from 'react-redux';
-// import store from './store';
-
-// import { Header, Footer } from './components/Layout';
-
-// Main App Component
 export default function App() {
-  // const [currentPage, setCurrentPage] = useState('home');
-
-  // const navigateTo = (page) => {
-  //   setCurrentPage(page);
-  // };
-
-  // const getPageContent = () => {
-  //   switch (currentPage) {
-  //     case 'home':
-  //       return <ProductList />;
-  //     case 'cart':
-  //       return <Cart onNavigate={navigateTo} />;
-  //     case 'checkout':
-  //       return <Checkout onNavigate={navigateTo} />;
-  //     case 'orders':
-  //       return <OrderHistory />;
-  //     default:
-  //       return <ProductList />;
-  //   }
-  // };
 
   return (
     <>
-      Hlo
+      {/* <Routes>
+        <Route path='/' element={<HomePage />} />
+
+      </Routes>
+      <BottomNavBar /> */}
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
+
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
       <BottomNavBar />
     </>
   );
