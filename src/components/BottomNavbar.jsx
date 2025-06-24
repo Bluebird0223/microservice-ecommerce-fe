@@ -70,8 +70,8 @@ const BottomNavBar = () => {
         <nav className={`fixed bottom-0 mb-2 max-w-md left-1/2 transform -translate-x-1/2 bg-blue-500/15 backdrop-blur-md border border-blue-500/40 text-white p-2 shadow-lg rounded-4xl z-50 transition-transform duration-300 ease-in-out ${showNav ? 'translate-y-0' : 'translate-y-96'}`}>
             <div className="container mx-auto flex justify-center items-center h-full">
                 <ul className="flex space-x-8">
-                    {navItems.map((item) => (
-                        <li key={item.page} className="relative group">
+                    {navItems?.map((item) => (
+                        <li key={item?.path} className="relative group">
 
                             <button
                                 onClick={() => navigate(item.path)}
