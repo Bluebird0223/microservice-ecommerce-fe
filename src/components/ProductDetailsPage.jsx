@@ -22,13 +22,21 @@ const ProductDetailsPage = () => {
 
     if (!product) return <div className="p-4">Product not found</div>;
 
+    const addToCart = (id) => {
+        console.log("added to cart", id)
+    }
+
+    const handelBuyNow = (id) => {
+        console.log("handle buy now", id)
+    }
+
     return (
-        <div className="max-w-2xl mx-auto p-4">
+        <div className="max-w-4xl mx-auto p-4">
             <button
                 onClick={() => navigate(-1)}
-                className="text-blue-500 mb-2 hover:underline"
+                className="text-gray-300 mb-2 bg-gray-700 rounded-2xl hover:text-white p-2 cursor-pointer transition duration-200 border"
             >
-                &larr; Back
+                Back
             </button>
             <img
                 src={product.imageUrl}
@@ -41,6 +49,19 @@ const ProductDetailsPage = () => {
                 <span className="line-through text-gray-400">₹{product.originalPrice.toFixed(2)}</span>
             </p>
             <p className="text-sm text-gray-600">{product.description}</p>
+
+            <button
+                onClick={() => addToCart(product.id)}
+                className='mt-4 rounded-4xl bg-gray-700 p-2 cursor-pointer'
+            >
+                Add to cart
+            </button>
+            <button
+                onClick={() => handelBuyNow(product.id)}
+                className='mt-4 ml-4 rounded-4xl bg-gray-700 p-2 cursor-pointer'
+            >
+                Buy Now
+            </button>
         </div>
     );
 };
