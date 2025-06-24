@@ -26,17 +26,20 @@ const HomePage = () => {
                     className="break-inside-avoid mb-4 bg-white rounded-lg shadow hover:shadow-lg cursor-pointer transition duration-200"
                     onClick={() => navigate(`/product/${product.id}`)}
                 >
-                    <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-full rounded-t-lg"
-                    />
-                    <div className="p-2">
-                        <h3 className="font-semibold text-sm text-black">{product.name}</h3>
+                    <div className='relative'>
+
+                        <img
+                            src={product.imageUrl}
+                            alt={product.name}
+                            className="w-full rounded-lg"
+                        />
+                        <div className="p-2 absolute bottom-0 text-black">
+                        <h3 className="font-semibold text-sm">{product.name}</h3>
                         <p className="text-xs text-gray-700">
                             ₹{product.price.toFixed(2)}{' '}
                             <span className="line-through text-gray-400">₹{product.originalPrice.toFixed(2)}</span>
                         </p>
+                        </div>
                     </div>
                 </div>
             ))}
