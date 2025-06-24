@@ -7,6 +7,7 @@ import ProductDetailsPage from './components/ProductDetailsPage';
 import OrdersPage from './components/OrdersPage';
 import SettingsPage from './components/SettingsPage';
 import ProfilePage from './components/ProfilePage';
+import EditProfilePage from './components/EditProfilePage';
 
 export default function App() {
 
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<EditProfilePage />} />
       </Routes>
       <BottomNavBar />
     </>
