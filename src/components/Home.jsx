@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const products = [
     { id: '1', name: 'Vintage Camera', imageUrl: 'https://placehold.co/300x400/E6E6FA/000000?text=Camera', price: 120.00, originalPrice: 150.00, description: 'A classic vintage camera, perfect for collectors and enthusiasts. Captures timeless moments with analog charm.' },
@@ -21,27 +22,29 @@ const HomePage = () => {
     return (
         <div className="columns-2 sm:columns-3 gap-4 p-4">
             {products.map(product => (
-                <div
+                <motion.div
                     key={product.id}
+                    layoutId={`product-card-${product.id}`}
                     className="break-inside-avoid mb-4 bg-white rounded-lg shadow hover:shadow-lg cursor-pointer transition duration-200"
                     onClick={() => navigate(`/product/${product.id}`)}
                 >
                     <div className='relative'>
 
-                        <img
+                        <motion.img
+                            layoutId={`product-image-${product.id}`}
                             src={product.imageUrl}
                             alt={product.name}
                             className="w-full rounded-lg"
                         />
-                        <div className="p-2 absolute bottom-0 text-black">
-                        <h3 className="font-semibold text-sm">{product.name}</h3>
-                        <p className="text-xs text-gray-700">
-                            ₹{product.price.toFixed(2)}{' '}
-                            <span className="line-through text-gray-400">₹{product.originalPrice.toFixed(2)}</span>
-                        </p>
+                        <div className="flex p-2 absolute bottom-0 left-0 right-0 text-black bg-white/10 bg-opacity-70 rounded-lg justify-between items-center">
+                            <h3 className="font-semibold text-sm">{product.name}</h3>
+                            <p className="text-xs text-gray-700">
+                                ₹{product.price.toFixed(2)}{' '}
+                                <span className="line-through text-gray-400">₹{product.originalPrice.toFixed(2)}</span>
+                            </p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             ))}
         </div>
     );

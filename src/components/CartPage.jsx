@@ -114,7 +114,7 @@ const CartPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
             </button>
-            <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden p-6">
+            <div className=" mx-auto bg-white rounded-lg shadow-xl overflow-hidden p-6">
                 <h1 className="text-3xl font-extrabold text-gray-900 mb-8 border-b pb-2">Your Shopping Cart</h1>
 
                 {cartItems.length === 0 ? (
