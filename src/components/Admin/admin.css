@@ -1,0 +1,40 @@
+.mainAdminWrapper{
+    display: flex;
+}
+
+.adminPageWrapper{
+    width: 78%;
+    overflow-x: hidden;
+    transition: 0.1s all ease-in-out;
+}
+
+.adminPageWrapperClosed{
+    width: 92%;
+    transition: 0.4s all ease-in-out;
+}
+
+
+/* -----------Media query ------------- */
+@media (max-width:1300px) {
+    .adminPageWrapper{
+        width: 72%;
+    }
+
+    .adminPageWrapperClosed{
+        width: 90%;
+    }
+}
+
+@media (max-width:1024px) {
+    .adminPageWrapper{
+        width: 100%;
+    }
+    .adminPageWrapperClosed{
+        width: 88%;
+    }
+}
+@media (max-width:850px) {
+    .adminPageWrapperClosed{
+        width: 86%;
+    }
+}
