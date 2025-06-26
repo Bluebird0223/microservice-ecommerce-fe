@@ -1,15 +1,21 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
 
-const nodeEnvironment = process.env.REACT_APP_NODE_ENV;
-const serverUrl = process.env.REACT_APP_NODE_URL;
-// const tokenName = process.env.REACT_APP_ADMIN_TOKENNAME;
-// const deptToken = process.env.REACT_APP_DEPT_TOKENNAME
+
+// const ADMIN_TOKEN = import.meta.env.VITE_APP_ADMIN_TOKENNAME
+// const ADMINDETAILS = import.meta.env.VITE_APP_ADMINDETAILS
+// const DEPT_TOKENNAME = import.meta.env.VITE_APP_DEPT_TOKENNAME
+// const DEPTDETAILS = import.meta.env.VITE_APP_DEPTDETAILS
+const nodeEnvironment = import.meta.env.VITE_APP_NODE_ENV
+const serverUrl = import.meta.env.VITE_APP_NODE_URL;
+const tokenName = import.meta.env.VITE_APP_ADMIN_TOKENNAME;
+const deptToken = import.meta.env.VITE_APP_DEPT_TOKENNAME
+
 let token = null;
-if (getCookie(process.env.REACT_APP_ADMIN_TOKENNAME)) {
-    token = process.env.REACT_APP_ADMIN_TOKENNAME;
-} else if (getCookie(process.env.REACT_APP_DEPT_TOKENNAME)) {
-    token = process.env.REACT_APP_DEPT_TOKENNAME;
+if (getCookie(tokenName)) {
+    token = tokenName;
+} else if (getCookie(deptToken)) {
+    token = deptToken;
 }
 
 export function getServerUrl() {
@@ -58,8 +64,9 @@ export const adminCommunication = {
     },
     login: async function (dataToSend) {
         try {
+            console.log(dataToSend)
             const config = { headers: { "Content-Type": "application/json" } }
-            return axios.post(`${getServerUrl()}/api/v1/login`, dataToSend, config);
+            return axios.post(`${getServerUrl()}/api/users/login`, dataToSend, config);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }

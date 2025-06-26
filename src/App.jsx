@@ -9,9 +9,10 @@ import SettingsPage from './components/SettingsPage';
 import ProfilePage from './components/ProfilePage';
 import EditProfilePage from './components/EditProfilePage';
 import { AnimatePresence } from 'framer-motion';
-// import AdminProtectedRoute from './Routes/AdminProtectedRoute';
-// import Dashboard from './components/Admin/Dashboard'
-// import MainData from './components/Admin/MainData'
+import AdminProtectedRoute from './Routes/AdminProtectedRoute';
+import LoginPage from './components/Login';
+import Dashboard from './components/Admin/Dashboard'
+import MainData from './components/Admin/MainData'
 
 export default function App() {
   const location = useLocation();
@@ -31,20 +32,21 @@ export default function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* Admin Routes  */}
+          <Route path="/admin/dashboard" element={
+            <AdminProtectedRoute>
+              <Dashboard activeTab={0}>
+                <MainData />
+              </Dashboard>
+            </AdminProtectedRoute>
+          }></Route>
+
         </Routes>
       </AnimatePresence>
 
 
-      {/* Admin Routes  */}
-      {/* <Route path="/admin/dashboard" element={
-        <AdminProtectedRoute>
-          <Dashboard activeTab={0}>
-            <MainData />
-          </Dashboard>
-        </AdminProtectedRoute>
-      }>
-
-      </Route> */}
 
       {/* <Route
         path="/admin/orders"

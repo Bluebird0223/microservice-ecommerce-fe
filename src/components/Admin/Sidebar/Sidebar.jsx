@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Avatar from "@mui/material/Avatar";
 import CategoryIcon from "@mui/icons-material/Category";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import "./Sidebar.css";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
@@ -41,11 +41,6 @@ const navMenu = [
       ref: "/admin/category",
    },
    {
-      icon: <CategoryIcon />,
-      label: "Sub-category",
-      ref: "/admin/subcategory",
-   },
-   {
       icon: <GroupIcon />,
       label: "Users",
       ref: "/admin/users",
@@ -54,21 +49,6 @@ const navMenu = [
       icon: <ReviewsIcon />,
       label: "Reviews",
       ref: "/admin/reviews",
-   },
-   {
-      icon: <AccountTreeIcon />,
-      label: "Departments",
-      ref: "/admin/department",
-   },
-   {
-      icon: <AccountTreeIcon />,
-      label: "Sub-departments",
-      ref: "/admin/subdepartment",
-   },
-   {
-      icon: <PeopleAltIcon />,
-      label: "Department Users",
-      ref: "/admin/department-users",
    },
    {
       icon: <DiscountIcon />,
@@ -80,70 +60,71 @@ const navMenu = [
       label: "Logout",
    },
 ];
+const ADMINDETAILS = import.meta.env.VITE_APP_ADMINDETAILS
+const ADMIN_TOKEN = import.meta.env.VITE_APP_ADMIN_TOKENNAME
 
 const Sidebar = ({ activeTab, setToggleSidebar, toggleSidebar }) => {
-   const dispatch = useDispatch();
+   // const dispatch = useDispatch();
    const navigate = useNavigate();
    const { enqueueSnackbar } = useSnackbar();
    const [user, setUser] = useState({});
-   const [deptUser, setDeptUser] = useState({});
+   // const [deptUser, setDeptUser] = useState({});
 
    useEffect(() => {
-      const adminDetails = Cookies.get(process.env.REACT_APP_ADMINDETAILS);
+      const adminDetails = Cookies.get(ADMINDETAILS);
       if (adminDetails) {
          const parsedUser = JSON.parse(adminDetails);
          setUser(parsedUser);
       }
-      
-      const userDepartment = Cookies.get(process.env.REACT_APP_DEPTDETAILS);
-      if (userDepartment) {
-         const parsedDeptUser = JSON.parse(userDepartment);
-         setDeptUser(parsedDeptUser);
-      }
+
+      // const userDepartment = Cookies.get(process.env.REACT_APP_DEPTDETAILS);
+      // if (userDepartment) {
+      //    const parsedDeptUser = JSON.parse(userDepartment);
+      //    setDeptUser(parsedDeptUser);
+      // }
    }, []);
 
+
    const handleLogout = () => {
-      Cookies.remove(process.env.REACT_APP_ADMIN_TOKENNAME);
-      Cookies.remove(process.env.REACT_APP_ADMINDETAILS);
+      Cookies.remove(ADMIN_TOKEN);
+      Cookies.remove(ADMINDETAILS);
       enqueueSnackbar("Logout Successfully", { variant: "success" });
       navigate("/login");
    };
 
-   const hasWritePermission = (tab) => {
+   // const hasWritePermission = (tab) => {
 
-      // const hasTabAccess = deptUser?.tabAccess.some(
-      //    (access) => access.tab.toLowerCase() === tab.toLowerCase(),
-      // );
-      // return hasTabAccess;
-        // Check if the department user has any tab access
-   if (!deptUser?.tabAccess || deptUser?.tabAccess.length === 0) {
-      return false;
-   }
+   //    // const hasTabAccess = deptUser?.tabAccess.some(
+   //    //    (access) => access.tab.toLowerCase() === tab.toLowerCase(),
+   //    // );
+   //    // return hasTabAccess;
+   //      // Check if the department user has any tab access
+   // if (!deptUser?.tabAccess || deptUser?.tabAccess.length === 0) {
+   //    return false;
+   // }
 
    // Iterate through all the tab access and check permission
-   const tabInfo = deptUser?.tabAccess.find((access) => access?.tab?.toLowerCase() === tab?.toLowerCase());
+   // const tabInfo = deptUser?.tabAccess.find((access) => access?.tab?.toLowerCase() === tab?.toLowerCase());
 
    // If tab is found and its permission is not 'none'
-   return tabInfo && tabInfo.permission !== "none";
-   };
+   // return tabInfo && tabInfo.permission !== "none";
+
 
    return (
       <aside
-         className={`${toggleSidebar ? "sidebar" : "sidebarClosed"
-            } min-h-screen pb-5 bg-gray-800 text-white border-r`}
-      >
+         className={`${toggleSidebar ? "sidebar" : "sidebarClosed"} min-h-screen pb-5 bg-gray-800 text-white border-1`}>
          <div className="flex items-center gap-3 bg-gray-700 p-2 rounded-lg shadow-lg my-4 mx-3.5 ">
             <Avatar
                alt="Avatar"
-            // src={user.avatar.url}
+               src={user}
             />
             {toggleSidebar && (
                <div className="flex flex-col gap-0">
                   <span className="font-medium text-lg">
-                     {user?.name ?? deptUser?.name ?? "Peter Parker"}
+                     {user?.username ?? "Peter Parker"}
                   </span>
                   <span className="text-gray-300 text-sm">
-                     {user?.email ?? deptUser?.email ?? "peterparker@gmail.com"}
+                     {user?.email ?? "peterparker@gmail.com"}
                   </span>
                </div>
             )}
@@ -158,7 +139,35 @@ const Sidebar = ({ activeTab, setToggleSidebar, toggleSidebar }) => {
          <div className="flex flex-col w-full gap-0 my-8">
             {navMenu.map((item, index) => {
                const { icon, label, ref } = item;
-               if (hasWritePermission(label)) {
+               // if (hasWritePermission(label)) {
+               //    return (
+               //       <>
+               //          {label === "Logout" ? (
+               //             <button
+               //                title="Logout"
+               //                onClick={handleLogout}
+               //                className="hover:bg-gray-700 flex gap-3 items-center py-3 px-4 font-medium"
+               //             >
+               //                <span>{icon}</span>
+               //                {toggleSidebar && <span>{label}</span>}
+               //             </button>
+               //          ) : (
+               //             <Link
+               //                to={ref}
+               //                title={label}
+               //                className={`${activeTab === index
+               //                   ? "bg-gray-700"
+               //                   : "hover:bg-gray-700"
+               //                   } flex gap-3 items-center py-3 px-4 font-medium`}
+               //             >
+               //                <span>{icon}</span>
+               //                {toggleSidebar && <span>{label}</span>}
+               //             </Link>
+               //          )}
+               //       </>
+               //    );
+               // } else 
+               if (user?.userType === "admin") {
                   return (
                      <>
                         {label === "Logout" ? (
@@ -185,34 +194,7 @@ const Sidebar = ({ activeTab, setToggleSidebar, toggleSidebar }) => {
                         )}
                      </>
                   );
-               } else if (user?.role === "admin") {
-                  return (
-                     <>
-                        {label === "Logout" ? (
-                           <button
-                              title="Logout"
-                              onClick={handleLogout}
-                              className="hover:bg-gray-700 flex gap-3 items-center py-3 px-4 font-medium"
-                           >
-                              <span>{icon}</span>
-                              {toggleSidebar && <span>{label}</span>}
-                           </button>
-                        ) : (
-                           <Link
-                              to={ref}
-                              title={label}
-                              className={`${activeTab === index
-                                 ? "bg-gray-700"
-                                 : "hover:bg-gray-700"
-                                 } flex gap-3 items-center py-3 px-4 font-medium`}
-                           >
-                              <span>{icon}</span>
-                              {toggleSidebar && <span>{label}</span>}
-                           </Link>
-                        )}
-                     </>
-                  );
-               }else{
+               } else {
                   return null
                }
             })}
