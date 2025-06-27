@@ -112,7 +112,7 @@ const Sidebar = ({ activeTab, setToggleSidebar, toggleSidebar }) => {
 
    return (
       <aside
-         className={`${toggleSidebar ? "sidebar" : "sidebarClosed"} min-h-screen pb-5 bg-gray-800 text-white border-1`}>
+         className={`${toggleSidebar ? "sidebar" : "sidebarClosed"} min-h-screen pb-5 bg-gray-800 text-white`}>
          <div className="flex items-center gap-3 bg-gray-700 p-2 rounded-lg shadow-lg my-4 mx-3.5 ">
             <Avatar
                alt="Avatar"
