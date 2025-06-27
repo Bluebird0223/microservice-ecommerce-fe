@@ -13,16 +13,21 @@ import AdminProtectedRoute from './Routes/AdminProtectedRoute';
 import LoginPage from './components/Login';
 import Dashboard from './components/Admin/Dashboard'
 import MainData from './components/Admin/MainData'
+import OrderTable from './components/Admin/OrderTable'
 
 export default function App() {
   const location = useLocation();
+  // Define an array of paths where the BottomNavBar should NOT be shown
+  const noBottomNavPaths = [
+    '/login',
+    '/admin/dashboard'
+  ];
+
+  // Check if the current path is in the noBottomNavPaths array
+  const showBottomNavBar = !noBottomNavPaths.includes(location.pathname);
+
   return (
     <>
-      {/* <Routes>
-        <Route path='/' element={<HomePage />} />
-
-      </Routes>
-      <BottomNavBar /> */}
       <AnimatePresence mode='wait'>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} />
@@ -37,27 +42,29 @@ export default function App() {
           {/* Admin Routes  */}
           <Route path="/admin/dashboard" element={
             <AdminProtectedRoute>
-              <Dashboard activeTab={0}>
-                <MainData />
-              </Dashboard>
+              <Dashboard activeTab={0}><MainData /></Dashboard>
+            </AdminProtectedRoute>}>
+          </Route>
+
+          <Route path="/admin/orders" element={
+            <AdminProtectedRoute>
+              <Dashboard activeTab={1}><OrderTable /></Dashboard>
             </AdminProtectedRoute>
-          }></Route>
+          }
+          ></Route>
 
         </Routes>
       </AnimatePresence>
 
+      {/* Conditionally render the BottomNavBar */}
+      {showBottomNavBar && <BottomNavBar />}
+    </>
+  );
+}
 
 
-      {/* <Route
-        path="/admin/orders"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={1}>
-              <OrderTable />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
+
+{/* 
 
       <Route
         path="/admin/order/:id"
@@ -314,9 +321,3 @@ export default function App() {
           </AdminProtectedRoute>
         }
       ></Route> */}
-
-      <BottomNavBar />
-    </>
-  );
-}
-

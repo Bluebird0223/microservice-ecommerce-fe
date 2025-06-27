@@ -9,7 +9,7 @@ import { adminCommunication } from "../../service/adminCommunication";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { Modal } from "@mui/material";
 import OrderBilling from "./OrderBilling";
-import { checkDeptTabAccess } from "../../utils/checkDeptTabAccess";
+// import { checkDeptTabAccess } from "../../utils/checkDeptTabAccess";
 
 const OrderTable = () => {
    const { enqueueSnackbar } = useSnackbar();
@@ -40,7 +40,7 @@ const OrderTable = () => {
    };
 
    useEffect(() => {
-      setPermission(checkDeptTabAccess('orders'))
+      // setPermission(checkDeptTabAccess('orders'))
       fetchOrders();
    }, [enqueueSnackbar]);
 
