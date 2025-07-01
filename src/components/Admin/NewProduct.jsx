@@ -15,54 +15,54 @@ const NewProduct = () => {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false)
-    const [highlights, setHighlights] = useState([]);
-    const [highlightInput, setHighlightInput] = useState("");
-    const [specs, setSpecs] = useState([]);
-    const [specsInput, setSpecsInput] = useState({
-        title: "",
-        description: ""
-    });
+    // const [highlights, setHighlights] = useState([]);
+    // const [highlightInput, setHighlightInput] = useState("");
+    // const [specs, setSpecs] = useState([]);
+    // const [specsInput, setSpecsInput] = useState({
+    //     title: "",
+    //     description: ""
+    // });
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [cuttedPrice, setCuttedPrice] = useState(0);
     const [categoriesList, setCategoriesList] = useState([]);
-    // const [subCategoriesList, setSubCategoriesList] = useState([]);
     const [category, setCategory] = useState("");
-    // const [subcategory, setSubCategory] = useState("");
     const [stock, setStock] = useState(0);
     const [warranty, setWarranty] = useState(0);
     const [brand, setBrand] = useState("");
+    // const [subcategory, setSubCategory] = useState("");
+    // const [subCategoriesList, setSubCategoriesList] = useState([]);
     // const [images, setImages] = useState([]);
     // const [imagesPreview, setImagesPreview] = useState([]);
 
-    // const [logo, setLogo] = useState("");
-    // const [logoPreview, setLogoPreview] = useState("");
+    const [logo, setLogo] = useState("");
+    const [logoPreview, setLogoPreview] = useState("");
 
-    const handleSpecsChange = (e) => {
-        setSpecsInput({ ...specsInput, [e.target.name]: e.target.value });
-    }
+    // const handleSpecsChange = (e) => {
+    //     setSpecsInput({ ...specsInput, [e.target.name]: e.target.value });
+    // }
 
-    const addSpecs = () => {
-        if (!specsInput.title.trim() || !specsInput.title.trim()) return;
-        setSpecs([...specs, specsInput]);
-        setSpecsInput({ title: "", description: "" });
-    }
+    // const addSpecs = () => {
+    //     if (!specsInput.title.trim() || !specsInput.title.trim()) return;
+    //     setSpecs([...specs, specsInput]);
+    //     setSpecsInput({ title: "", description: "" });
+    // }
 
-    const addHighlight = () => {
-        if (!highlightInput.trim()) return;
-        setHighlights([...highlights, highlightInput]);
-        setHighlightInput("");
-    }
+    // const addHighlight = () => {
+    //     if (!highlightInput.trim()) return;
+    //     setHighlights([...highlights, highlightInput]);
+    //     setHighlightInput("");
+    // }
 
-    const deleteHighlight = (index) => {
-        setHighlights(highlights.filter((h, i) => i !== index))
-    }
+    // const deleteHighlight = (index) => {
+    //     setHighlights(highlights.filter((h, i) => i !== index))
+    // }
 
-    const deleteSpec = (index) => {
-        setSpecs(specs.filter((s, i) => i !== index))
-    }
+    // const deleteSpec = (index) => {
+    //     setSpecs(specs.filter((s, i) => i !== index))
+    // }
 
     const handleLogoChange = (e) => {
         const reader = new FileReader();
@@ -73,7 +73,6 @@ const NewProduct = () => {
                 setLogo(reader.result);
             }
         };
-
         reader.readAsDataURL(e.target.files[0]);
     }
 
@@ -98,56 +97,41 @@ const NewProduct = () => {
 
     const newProductSubmitHandler = async (e) => {
         e.preventDefault();
-        
+
         // required field checks
-        if (highlights.length <= 0) {
-            enqueueSnackbar("Add Highlights", { variant: "warning" });
-            return;
-        }
+        // if (highlights.length <= 0) {
+        //     enqueueSnackbar("Add Highlights", { variant: "warning" });
+        //     return;
+        // }
         if (!logo) {
             enqueueSnackbar("Add Thumbnail image", { variant: "warning" });
             return;
         }
-        if (specs.length <= 1) {
-            enqueueSnackbar("Add Minimum 2 Specifications", { variant: "warning" });
-            return;
-        }
+        // if (specs.length <= 1) {
+        //     enqueueSnackbar("Add Minimum 2 Specifications", { variant: "warning" });
+        //     return;
+        // }
         if (images.length <= 0) {
             enqueueSnackbar("Add Product Images", { variant: "warning" });
             return;
         }
         try {
             setLoading(true)
-            const formData = new FormData();
+            const dataToSend = {
+                categoryId: category,
+                productName: name,
+                description: description,
+                price: price.toString(),
+                discountPrice: cuttedPrice.toString(),
+                productPicture: logo, // base64 or URL
+                brand: brand,
+                stockQuantity: Number(stock),
+                warranty: warranty.toString(),
+                // Optionally add: ratings, reviews, createdBy, createdAt, updatedAt
+            };
 
-            formData.set("name", name);
-            formData.set("description", description);
-            formData.set("price", price);
-            formData.set("cuttedPrice", cuttedPrice);
-            formData.set("category", category);
-            formData.set("subcategory", subcategory);
-            formData.set("stock", stock);
-            formData.set("warranty", warranty);
-            formData.set("brandname", 'Mahahandloom');
-            formData.set("Thumbnail", logo);
-            formData.set("user", '674d93b0a6533836239debfb')
-
-
-            images.forEach((image) => {
-                formData.append("images", image);
-            });
-
-            highlights.forEach((h) => {
-                formData.append("highlights", h);
-            });
-
-            specs.forEach((s) => {
-                formData.append("specifications", JSON.stringify(s));
-            });
-
-            console.log(...formData)
-
-            const serverResponse = await adminCommunication.createProduct(formData);
+            const serverResponse = await adminCommunication.createProduct(dataToSend);
+            console.log(serverResponse)
             if (serverResponse?.data?.success) {
                 navigate("/admin/products");
             } else {
@@ -176,8 +160,9 @@ const NewProduct = () => {
     const fetchCategories = async () => {
         try {
             const response = await adminCommunication.getAllCategory();
-            if (response?.data?.success) {
-                setCategoriesList(response?.data?.category);
+            console.log(response)
+            if (response?.status===200) {
+                setCategoriesList(response?.data?.categories);
             }
         } catch (error) {
             enqueueSnackbar("Error fetching categories: " + error.message, { variant: "error" });
@@ -246,7 +231,7 @@ const NewProduct = () => {
                             onChange={(e) => setCuttedPrice(e.target.value)}
                         />
                     </div>
-                    <div className="flex justify-between gap-4">
+                    <div className="flex justify-between text-gray-700 gap-4">
                         <TextField
                             label="Category"
                             select
@@ -258,12 +243,12 @@ const NewProduct = () => {
                             onChange={(e) => setCategory(e.target.value)}
                         >
                             {categoriesList?.map((category) => (
-                                <MenuItem key={category._id} value={category._id}>
-                                    {category.name}
+                                <MenuItem key={category.categoryId} value={category.categoryId}>
+                                    {category.categoryName}
                                 </MenuItem>
                             ))}
                         </TextField>
-                        <TextField
+                        {/* <TextField
                             label="Sub-Category"
                             select
                             fullWidth
@@ -278,7 +263,7 @@ const NewProduct = () => {
                                     {subCategory.name}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </TextField> */}
 
                     </div>
                     <div className="flex  gap-4">
@@ -312,7 +297,7 @@ const NewProduct = () => {
                         />
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    {/* <div className="flex flex-col gap-2">
                         <div className="flex justify-between items-center border rounded">
                             <input value={highlightInput} onChange={(e) => setHighlightInput(e.target.value)} type="text" placeholder="Highlight" className="px-2 flex-1 outline-none border-none" />
                             <span onClick={() => addHighlight()} className="py-2 px-6 bg-primary-blue text-white rounded-r hover:shadow-lg cursor-pointer">Add</span>
@@ -328,12 +313,12 @@ const NewProduct = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
 
                 <div className="flex flex-col gap-2 m-2 lg:w-1/2">
-                    <h2 className="font-medium">Thumbnail Image</h2>
+                    <h2 className="font-medium text-gray-700">Product Image</h2>
                     <div className="flex gap-4 items-start">
                         <div className="w-24 h-10 flex items-center justify-center border rounded-lg">
                             {!logoPreview ? <ImageIcon /> :
@@ -352,15 +337,15 @@ const NewProduct = () => {
                         </label>
                     </div>
 
-                    <h2 className="font-medium">Specifications</h2>
+                    {/* <h2 className="font-medium">Specifications</h2>
 
                     <div className="flex gap-2 items-center">
                         <TextField value={specsInput.title} onChange={handleSpecsChange} name="title" label="Name" placeholder="Model No" variant="outlined" size="small" />
                         <TextField value={specsInput.description} onChange={handleSpecsChange} name="description" label="Description" placeholder="WJDK42DF5" variant="outlined" size="small" />
                         <span onClick={() => addSpecs()} className="py-2 px-6 bg-primary-blue text-white rounded hover:shadow-lg cursor-pointer">Add</span>
-                    </div>
+                    </div> */}
 
-                    <div className="flex flex-col gap-1.5">
+                    {/* <div className="flex flex-col gap-1.5">
                         {specs.map((spec, i) => (
                             <div className="flex justify-between items-center text-sm rounded bg-blue-50 py-1 px-2">
                                 <p className="text-gray-500 font-medium">{spec.title}</p>
@@ -370,9 +355,9 @@ const NewProduct = () => {
                                 </span>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
-                    <h2 className="font-medium">Product Images</h2>
+                    {/* <h2 className="font-medium">Product Images</h2>
                     <div className="flex gap-2 overflow-x-auto h-32 border rounded">
                         {imagesPreview.map((image, i) => (
                             <img draggable="false" src={image} alt="Product" key={i} className="w-full h-full object-contain" />
@@ -388,12 +373,12 @@ const NewProduct = () => {
                             className="hidden"
                         />
                         Choose Files
-                    </label>
+                    </label> */}
 
                     <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="bg-primary-orange uppercase w-1/3 p-3 text-white font-medium rounded shadow hover:shadow-lg cursor-pointer"
+                            className="bg-orange-600 uppercase w-1/3 p-3 text-white font-medium rounded shadow hover:shadow-lg cursor-pointer"
                             disabled={loading}
                         >
                             {loading ? (
