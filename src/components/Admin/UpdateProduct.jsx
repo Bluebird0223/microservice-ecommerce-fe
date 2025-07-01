@@ -197,24 +197,24 @@ const UpdateProduct = () => {
 
     const fetchProductDetails = async () => {
         try {
-            const response = await adminCommunication.getProductById(productId);
-            if (response?.data?.success) {
-                const { name, description, price, cuttedPrice, stock, warranty, brand, highlights, specifications, images, category, subcategory } = response?.data?.product;
+            let dataToSend = { productId: productId }
+            const response = await adminCommunication.getProductById(dataToSend);
+            console.log(response?.data?.existingProduct)
+            if (response?.status === 200) {
+                const { productName, description, price, discountPrice, stockQuantity, warranty, brand, productPicture, categoryId } = response?.data?.existingProduct;
+                // "categoryId": "K685ccff81",
+                // "productId": "E685d0cf81",
 
-                setName(name);
+                setName(productName);
                 setDescription(description);
                 setPrice(price);
-                setCuttedPrice(cuttedPrice);
-                setStock(stock);
+                setCuttedPrice(discountPrice);
+                setStock(stockQuantity);
                 setWarranty(warranty);
-                setHighlights(highlights);
-                setSpecs(specifications);
-                setOldImages(images);
-                setImages(images);
-                setCategory(category?._id);
-                setSubCategory(subcategory?._id);
-                setLogo(brand?.logo?.url);
-                setLogoPreview(brand?.logo?.url);
+                setOldImages(productPicture);
+                setImages(productPicture);
+                setCategory(categoryId);
+                setLogo(brand);
             }
         } catch (error) {
             enqueueSnackbar("Error fetching product: " + error.message, { variant: "error" });
@@ -230,7 +230,6 @@ const UpdateProduct = () => {
 
     return (
         <>
-            <MetaData title="Admin: Update Product | Flipkart" />
 
             <Link to="/admin/products" className="ml-1 flex items-center gap-0 font-medium text-primary-blue uppercase"><ArrowBackIosIcon sx={{ fontSize: "18px" }} />Go Back</Link>
             <form onSubmit={updateSubmitHandler} encType="multipart/form-data" className="flex flex-col sm:flex-row bg-white rounded-lg shadow p-4" id="mainform">
@@ -300,7 +299,7 @@ const UpdateProduct = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
-                        <TextField
+                        {/* <TextField
                             label="Sub-Category"
                             select
                             fullWidth
@@ -315,7 +314,7 @@ const UpdateProduct = () => {
                                     {subCategory.name}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </TextField> */}
                     </div>
                     <div className="flex justify-between gap-4">
                         <TextField
@@ -369,7 +368,7 @@ const UpdateProduct = () => {
 
                 <div className="flex flex-col gap-2 m-2 sm:w-1/2">
 
-                    <h2 className="font-medium">Thumbnail Image</h2>
+                    {/* <h2 className="font-medium">Thumbnail Image</h2>
                     <div className="flex justify-between gap-4 items-start">
                         <div className="w-24 h-10 flex items-center justify-center border rounded-lg">
                             {!logoPreview ? <ImageIcon /> :
@@ -393,7 +392,7 @@ const UpdateProduct = () => {
                         <TextField value={specsInput.title} onChange={handleSpecsChange} name="title" label="Name" placeholder="Model No" variant="outlined" size="small" />
                         <TextField value={specsInput.description} onChange={handleSpecsChange} name="description" label="Description" placeholder="WJDK42DF5" variant="outlined" size="small" />
                         <span onClick={() => addSpecs()} className="py-2 px-6 bg-primary-blue text-white rounded hover:shadow-lg cursor-pointer">Add</span>
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-col gap-1.5">
                         {specs.map((spec, i) => (
@@ -407,7 +406,7 @@ const UpdateProduct = () => {
                         ))}
                     </div>
 
-                    <h2 className="font-medium">Product Images</h2>
+                    <h2 className="font-medium text-black">Product Images</h2>
                     <div className="flex gap-2 overflow-x-auto h-32 border rounded">
                         {oldImages && oldImages.map((image, i) => (
                             <img draggable="false" src={image.url} alt="Product" key={i} className="w-full h-full object-contain" />

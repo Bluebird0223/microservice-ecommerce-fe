@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import MetaData from '../Layouts/MetaData';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import { adminCommunication } from '../../service/adminCommunication';
-import defaultImage from '../../assets/images/blank_img.jpeg';
+// import defaultImage from '../../assets/images/blank_img.jpeg';
 import Switch from '@mui/material/Switch';
 import Actions from './Actions';
 // import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';

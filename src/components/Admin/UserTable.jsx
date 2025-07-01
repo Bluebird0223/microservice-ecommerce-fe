@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import MetaData from '../Layouts/MetaData';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import { adminCommunication } from '../../service/adminCommunication';
-import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
+// import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
 import { Switch } from '@mui/material';
 
 const UserTable = () => {
@@ -19,12 +19,12 @@ const UserTable = () => {
 
     useEffect(() => {
 
-        setPermission(checkDeptTabAccess('users'))
+        // setPermission(checkDeptTabAccess('users'))
 
         const fetchUsers = async () => {
             try {
                 const response = await adminCommunication.getAllUsers();
-                if (response?.data?.success) {
+                if (response?.status === 200) {
                     setUsers(response?.data?.users);
                 } else {
                     enqueueSnackbar("Failed to fetch categories.", { variant: "error" });
@@ -42,7 +42,7 @@ const UserTable = () => {
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await adminCommunication.updateUserStatus(id);
-            if (response?.data?.success) {
+            if (response?.status === 200) {
                 enqueueSnackbar(`User status updated to ${newStatus ? 'Active' : 'Inactive'}`, { variant: "success" });
                 setUsers((prevUsers) =>
                     prevUsers.map((user) =>
@@ -67,7 +67,6 @@ const UserTable = () => {
                 return (
                     <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-full">
-                            {/* Display avatar if available */}
                             {params.row.avatar ? (
                                 <img draggable="false" src={params.row.avatar} alt={params.row.name} className="w-full h-full rounded-full object-cover" />
                             ) : (
@@ -87,12 +86,12 @@ const UserTable = () => {
             minWidth: 200,
             flex: 0.2,
         },
-        {
-            field: "gender",
-            headerName: "Gender",
-            minWidth: 100,
-            flex: 0.1,
-        },
+        // {
+        //     field: "gender",
+        //     headerName: "Gender",
+        //     minWidth: 100,
+        //     flex: 0.1,
+        // },
         {
             field: "role",
             headerName: "Role",
@@ -115,30 +114,28 @@ const UserTable = () => {
         {
             field: "registeredOn",
             headerName: "Registered On",
-            type: "date",
+            // type: "date",
             minWidth: 150,
             flex: 0.2,
         },
-        ...(permission?.permission !== 'read' ? [
-            {
-                field: "status",
-                headerName: "Status",
-                minWidth: 100,
-                flex: 1,
-                align: "center",
-                headerAlign: "center",
-                sortable: false,
-                renderCell: (params) => {
-                    return (
-                        <Switch
-                            checked={params.row.isActive}
-                            onChange={(e) => handleStatusChange(params.row.id, e.target.checked)}
-                            inputProps={{ 'aria-label': 'Status Toggle' }}
-                        />
-                    );
-                },
-            },
-        ] : []),
+        // {
+        //     field: "status",
+        //     headerName: "Status",
+        //     minWidth: 100,
+        //     flex: 1,
+        //     align: "center",
+        //     headerAlign: "center",
+        //     sortable: false,
+        //     renderCell: (params) => {
+        //         return (
+        //             <Switch
+        //                 checked={params.row.isActive}
+        //                 onChange={(e) => handleStatusChange(params.row.id, e.target.checked)}
+        //                 inputProps={{ 'aria-label': 'Status Toggle' }}
+        //             />
+        //         );
+        //     },
+        // },
 
     ];
 
@@ -146,13 +143,11 @@ const UserTable = () => {
 
     users && users.forEach((item) => {
         rows.unshift({
-            id: item._id,
-            name: item.name,
-            // avatar: item.avatar.url,
+            id: item.userId,
+            name: item.username,
+            avatar: item.profilePicture,
             email: item.email,
-            gender: item.gender.toUpperCase(),
-            role: item.role,
-            isActive: item.isActive,
+            role: item.userType,
             registeredOn: new Date(item.createdAt).toISOString().substring(0, 10),
         });
     });

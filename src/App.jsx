@@ -18,21 +18,16 @@ import Category from './components/Admin/Category'
 import AddCategory from './components/Admin/NewCategory'
 import UpdateCategory from './components/Admin/UpdateCategory'
 import ProductTable from './components/Admin/ProductTable'
+import UpdateProduct from './components/Admin/UpdateProduct'
+import NewProduct from './components/Admin/NewProduct'
+import UpdateOrder from './components/Admin/UpdateOrder'
+import UserTable from './components/Admin/UserTable'
+import UpdateUser from './components/Admin/UpdateUser'
 
 export default function App() {
   const location = useLocation();
-  // Define an array of paths where the BottomNavBar should NOT be shown
-  const noBottomNavPaths = [
-    '/login',
-    '/admin/dashboard',
-    '/admin/category',
-    '/admin/category/:id',
-    '/admin/product',
-    '/admin/product/:id'
-  ];
-
-  // Check if the current path is in the noBottomNavPaths array
-  const showBottomNavBar = !noBottomNavPaths.includes(location.pathname);
+  // Don't show bottom nav for login and admin routes
+  const showBottomNavBar = !location.pathname.startsWith('/admin') && location.pathname !== '/login';
 
   return (
     <>
@@ -60,6 +55,40 @@ export default function App() {
             </AdminProtectedRoute>
           }
           ></Route>
+          <Route path="/admin/order/:id"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={1}><UpdateOrder /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+
+
+          <Route
+            path="/admin/products"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}><ProductTable /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/new_product"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}><NewProduct /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/product/:id"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}><UpdateProduct /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+
           <Route
             path="/admin/category"
             element={
@@ -86,34 +115,24 @@ export default function App() {
           ></Route>
 
           <Route
-            path="/admin/products"
+            path="/admin/users"
             element={
               <AdminProtectedRoute>
-                <Dashboard activeTab={2}><ProductTable /></Dashboard>
+                <Dashboard activeTab={4}><UserTable /></Dashboard>
               </AdminProtectedRoute>
             }
           ></Route>
 
-          {/* <Route
-            path="/admin/new_product"
+
+          <Route
+            path="/admin/user/:id"
             element={
               <AdminProtectedRoute>
-                <Dashboard activeTab={2}>
-                  <NewProduct />
-                </Dashboard>
+                <Dashboard activeTab={4}><UpdateUser /></Dashboard>
               </AdminProtectedRoute>
             }
           ></Route>
-          <Route
-            path="/admin/product/:id"
-            element={
-              <AdminProtectedRoute>
-                <Dashboard activeTab={2}>
-                  <UpdateProduct />
-                </Dashboard>
-              </AdminProtectedRoute>
-            }
-          ></Route> */}
+
 
         </Routes>
       </AnimatePresence>
@@ -127,17 +146,7 @@ export default function App() {
 
 
 {/* 
-
-      <Route
-        path="/admin/order/:id"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={1}>
-              <UpdateOrder />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
+   
 
      
 
@@ -163,6 +172,69 @@ export default function App() {
         }
       ></Route>
 
+      <Route
+        path="/admin/products"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={2}>
+              <ProductTable />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+
+      <Route
+        path="/admin/new_product"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={2}>
+              <NewProduct />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path="/admin/product/:id"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={2}>
+              <UpdateProduct />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path="/admin/category"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={3}>
+              <Category />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path="/admin/category/:id"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={3}>
+              <UpdateCategory />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path="/admin/new_category"
+        element={
+          <AdminProtectedRoute>
+            <Dashboard activeTab={3}>
+              <AddCategory />
+            </Dashboard>
+          </AdminProtectedRoute>
+        }
+      ></Route>
+     
+     
       <Route
         path="/admin/reviews"
         element={

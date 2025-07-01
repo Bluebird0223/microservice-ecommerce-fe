@@ -21,12 +21,11 @@ This project is a microservice-based e-commerce backend system designed for scal
 
 - **React.js / Tailwind css / Redux / Vite**
 - **Node.js / Express.js**
-- **MongoDB** / DynamoDB (NoSQL)
-- **Redis** (for cart + caching)
+- **DynamoDB**
+- **Redis** (for cart + caching + otp verification)
 - **RabbitMQ / AWS SQS**
-- **Docker / Docker Compose**
 - **JWT + Bcrypt** (Auth)
-- **Swagger / Postman** (API documentation)
+- **Postman** (API documentation)
 
 ---
 

@@ -2,8 +2,8 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { Link, useNavigate } from 'react-router-dom';
-import ImageIcon from '@mui/icons-material/Image';
-import MetaData from '../Layouts/MetaData';
+// import ImageIcon from '@mui/icons-material/Image';
+// import MetaData from '../Layouts/MetaData';
 import { adminCommunication } from '../../service/adminCommunication';
 import { CircularProgress } from '@mui/material';
 
@@ -14,38 +14,35 @@ const AddCategory = () => {
 
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
-    const [logo, setLogo] = useState("");
-    const [logoPreview, setLogoPreview] = useState("");
+    // const [logo, setLogo] = useState("");
+    // const [logoPreview, setLogoPreview] = useState("");
 
-    const handleLogoChange = (e) => {
-        const reader = new FileReader();
+    // const handleLogoChange = (e) => {
+    //     const reader = new FileReader();
 
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setLogoPreview(reader.result);
-                setLogo(reader.result);
-            }
-        };
+    //     reader.onload = () => {
+    //         if (reader.readyState === 2) {
+    //             setLogoPreview(reader.result);
+    //             setLogo(reader.result);
+    //         }
+    //     };
 
-        reader.readAsDataURL(e.target.files[0]);
-    }
+    //     reader.readAsDataURL(e.target.files[0]);
+    // }
     const newCategorySubmitHandler = async (e) => {
         e.preventDefault();
-        if (!logo) {
-            enqueueSnackbar("Add Category image", { variant: "warning" });
-            return;
-        }
+        // if (!logo) {
+        //     enqueueSnackbar("Add Category image", { variant: "warning" });
+        //     return;
+        // }
 
-        const formData = new FormData();
-
-        formData.set("name", name);
-        formData.set("image", logo);
+        const dataToSend = { categoryName: name }
+        // formData.set("image", logo);
         try {
             setLoading(true);
 
-            const serverResponse = await adminCommunication.createCategory(formData);
-            console.log(serverResponse)
-            if (serverResponse?.data?.success) {
+            const serverResponse = await adminCommunication.createCategory(dataToSend);
+            if (serverResponse?.status === 201) {
                 enqueueSnackbar("Category Created Successfully", { variant: "success" });
                 navigate("/admin/category");
             } else {
@@ -60,7 +57,6 @@ const AddCategory = () => {
 
     return (
         <>
-            <MetaData title="Admin: New Category | Mahahandloom" />
             <div className="flex flex-col bg-white shadow-lg rounded-lg mx-auto w-lg max-w-xl">
                 <h2 className="text-center text-2xl font-medium mt-6 text-gray-800">Category</h2>
 
@@ -69,7 +65,7 @@ const AddCategory = () => {
                     <div className="flex flex-col gap-3 items-start">
                         <div className="flex flex-col w-full justify-between sm:flex-col gap-3 items-center">
 
-                            <h2 className="font-medium">Category Name</h2>
+                            <h2 className="font-medium text-gray-800" >Category Name</h2>
                             <TextField
                                 label="Category Name"
                                 variant="outlined"
@@ -79,7 +75,7 @@ const AddCategory = () => {
                                 onChange={(e) => setName(e.target.value)}
                             />
 
-                            <h2 className="font-medium">Category Image</h2>
+                            {/* <h2 className="font-medium">Category Image</h2>
                             <div className="flex justify-between gap-4 items-start">
                                 {/* <TextField
                             label="Brand"
@@ -89,7 +85,7 @@ const AddCategory = () => {
                             required
                             value={brand}
                             onChange={(e) => setBrand(e.target.value)}
-                        /> */}
+                        />
                                 <div className="w-24 h-25 flex items-center justify-center border rounded-lg p-1">
                                     {!logoPreview ? <ImageIcon /> :
                                         <img draggable="false" src={logoPreview} alt="Brand Logo" className="w-full h-full object-contain" />
@@ -105,10 +101,10 @@ const AddCategory = () => {
                                     />
                                     Choose Image
                                 </label>
-                            </div>
+                            </div> */}
                             <button
                                 type="submit"
-                                className="text-white py-3 w-full bg-primary-orange shadow hover:shadow-lg rounded-sm font-medium"
+                                className="text-white py-3 w-full bg-orange-600 shadow hover:shadow-lg rounded-sm font-medium"
                                 disabled={loading}
                             >
                                 {loading ? (
@@ -117,7 +113,7 @@ const AddCategory = () => {
                                     "Submit"
                                 )}
                             </button>
-                            <Link className="hover:bg-gray-100 text-primary-blue text-center py-3 w-full shadow border rounded-sm font-medium" to="/admin/category">Cancel</Link>
+                            <Link className="hover:bg-gray-100 text-blue-600 text-center py-3 w-full shadow border rounded-sm font-medium" to="/admin/category">Cancel</Link>
                         </div>
                     </div>
 

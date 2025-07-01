@@ -45,16 +45,16 @@ const navMenu = [
       label: "Users",
       ref: "/admin/users",
    },
-   {
-      icon: <ReviewsIcon />,
-      label: "Reviews",
-      ref: "/admin/reviews",
-   },
-   {
-      icon: <DiscountIcon />,
-      label: "coupon",
-      ref: "/admin/coupons",
-   },
+   // {
+   //    icon: <ReviewsIcon />,
+   //    label: "Reviews",
+   //    ref: "/admin/reviews",
+   // },
+   // {
+   //    icon: <DiscountIcon />,
+   //    label: "coupon",
+   //    ref: "/admin/coupons",
+   // },
    {
       icon: <LogoutIcon />,
       label: "Logout",

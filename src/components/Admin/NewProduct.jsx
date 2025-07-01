@@ -28,17 +28,17 @@ const NewProduct = () => {
     const [price, setPrice] = useState(0);
     const [cuttedPrice, setCuttedPrice] = useState(0);
     const [categoriesList, setCategoriesList] = useState([]);
-    const [subCategoriesList, setSubCategoriesList] = useState([]);
+    // const [subCategoriesList, setSubCategoriesList] = useState([]);
     const [category, setCategory] = useState("");
-    const [subcategory, setSubCategory] = useState("");
+    // const [subcategory, setSubCategory] = useState("");
     const [stock, setStock] = useState(0);
     const [warranty, setWarranty] = useState(0);
     const [brand, setBrand] = useState("");
-    const [images, setImages] = useState([]);
-    const [imagesPreview, setImagesPreview] = useState([]);
+    // const [images, setImages] = useState([]);
+    // const [imagesPreview, setImagesPreview] = useState([]);
 
-    const [logo, setLogo] = useState("");
-    const [logoPreview, setLogoPreview] = useState("");
+    // const [logo, setLogo] = useState("");
+    // const [logoPreview, setLogoPreview] = useState("");
 
     const handleSpecsChange = (e) => {
         setSpecsInput({ ...specsInput, [e.target.name]: e.target.value });

@@ -18,30 +18,32 @@ const UpdateCategory = () => {
     const [name, setName] = useState("");
     const [category, setCategory] = useState(null)
 
-    const handleLogoChange = (e) => {
-        const reader = new FileReader();
+    // const handleLogoChange = (e) => {
+    //     const reader = new FileReader();
 
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setLogoPreview(reader.result);
-                setLogo(reader.result);
-            }
-        };
+    //     reader.onload = () => {
+    //         if (reader.readyState === 2) {
+    //             setLogoPreview(reader.result);
+    //             setLogo(reader.result);
+    //         }
+    //     };
 
-        reader.readAsDataURL(e.target.files[0]);
-    }
+    //     reader.readAsDataURL(e.target.files[0]);
+    // }
 
     const updateCategorySubmitHandler = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.set("id", params.id)
-        formData.set("name", name);
+        const dataToSend = { categoryId: params.id, categoryName: name }
+        // formData.set("id", params.id)
+        // formData.set("name", name);
         try {
             setLoading(true)
-            const serverResponse = await adminCommunication.updateCategory(formData);
-            if (serverResponse?.data?.success) {
+            const serverResponse = await adminCommunication.updateCategory(dataToSend);
+            console.log(serverResponse)
+            if (serverResponse?.status===200) {
                 enqueueSnackbar("Category Created Successfully", { variant: "success" });
                 navigate("/admin/category");
             } else {
@@ -60,12 +62,13 @@ const UpdateCategory = () => {
     useEffect(() => {
         const fetchCategoryDetails = async () => {
             try {
-                const response = await adminCommunication.getCategoryById(categoryId);
+                const fetchData = { categoryId: categoryId }
+                const response = await adminCommunication.getCategoryById(fetchData);
                 console.log(response)
-                if (response?.data?.success) {
-                    const fetchedCategory = response?.data?.category;
+                if (response?.status === 200) {
+                    const fetchedCategory = response?.data?.existingCategory;
                     setCategory(fetchedCategory);
-                    setName(fetchedCategory.name);
+                    setName(fetchedCategory.categoryName);
                 }
             } catch (error) {
                 enqueueSnackbar("Error fetching products: " + error.message, { variant: "error" });
@@ -77,7 +80,6 @@ const UpdateCategory = () => {
 
     return (
         <>
-            <MetaData title="Admin: Update Category | Mahahandloom" />
 
             <Link to="/admin/category" className="ml-1 flex items-center gap-0 font-medium text-primary-blue uppercase"><ArrowBackIosIcon sx={{ fontSize: "18px" }} />Go Back</Link>
             <div className="flex flex-col bg-white shadow-lg rounded-lg mx-auto w-lg max-w-xl">
@@ -85,7 +87,7 @@ const UpdateCategory = () => {
                 <form onSubmit={updateCategorySubmitHandler} encType="multipart/form-data" className="p-5 sm:p-10">
                     <div className="flex flex-col gap-3 items-start">
                         <div className="flex flex-col w-full justify-between sm:flex-col gap-3 items-center">
-                            <h2 className="font-medium">Category Name</h2>
+                            <h2 className="font-medium text-gray-800">Category Name</h2>
                             <TextField
                                 label="Category Name"
                                 variant="outlined"
@@ -95,12 +97,12 @@ const UpdateCategory = () => {
                                 onChange={(e) => setName(e.target.value)}
                             />
 
-                            <h2 className="font-medium">Category Image</h2>
+                            {/* <h2 className="font-medium">Category Image</h2>
                             <div className="flex justify-between gap-4 items-start">
                                 <div className="w-24 h-25 flex items-center justify-center border rounded-lg p-1">
                                     {/* {!logoPreview ? <ImageIcon /> :
                                         <img draggable="false" src={logoPreview} alt="Brand Logo" className="w-full h-full object-contain" />
-                                    } */}
+                                    } 
                                 </div>
                                 <label className="rounded bg-gray-400 text-center cursor-pointer text-white py-2 px-2.5 shadow hover:shadow-lg">
                                     <input
@@ -112,10 +114,10 @@ const UpdateCategory = () => {
                                     />
                                     Choose Image
                                 </label>
-                            </div>
+                            </div> */}
                             <button
                                 type="submit"
-                                className="text-white py-3 w-full bg-primary-orange shadow hover:shadow-lg rounded-sm font-medium"
+                                className="text-white py-3 w-full bg-orange-500 shadow hover:shadow-lg rounded-sm font-medium"
                                 disabled={loading}
                             >{loading ? (
                                 <CircularProgress size={16} className="text-white" />

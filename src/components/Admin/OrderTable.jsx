@@ -23,7 +23,7 @@ const OrderTable = () => {
       setLoading(true)
       try {
          const response = await adminCommunication.getAllOrders();
-         if (response?.data?.success) {
+         if (response?.status === 200) {
             setOrder(response?.data?.orders);
          } else {
             enqueueSnackbar("Failed to fetch categories.", {
@@ -40,7 +40,6 @@ const OrderTable = () => {
    };
 
    useEffect(() => {
-      // setPermission(checkDeptTabAccess('orders'))
       fetchOrders();
    }, [enqueueSnackbar]);
 
@@ -67,8 +66,12 @@ const OrderTable = () => {
                      <span className="text-sm bg-yellow-100 p-1 px-2 font-medium rounded-full text-yellow-800">
                         {params.row.status}
                      </span>
+                  ) : params.row.status === "PENDING" ? (
+                     <span className="text-sm bg-blue-100 p-1 px-2 font-medium rounded-full text-blue-800">
+                        {params.row.status}
+                     </span>
                   ) : (
-                     <span className="text-sm bg-purple-100 p-1 px-2 font-medium rounded-full text-purple-800">
+                     <span className="text-sm bg-gray-100 p-1 px-2 font-medium rounded-full text-gray-800">
                         {params.row.status}
                      </span>
                   )}
@@ -96,47 +99,45 @@ const OrderTable = () => {
       {
          field: "orderOn",
          headerName: "Order On",
-         type: "date",
+         // type: "date",
          minWidth: 200,
          flex: 0.5,
       },
-      ...(permission?.permission !== 'read' ? [
-         {
-            field: "actions",
-            headerName: "Actions",
-            minWidth: 280,
-            flex: 0.3,
-            type: "number",
-            sortable: false,
-            renderCell: (params) => {
-               return (
-                  <div className="flex gap-4">
-                     <Actions
-                        editRoute={"order"}
-                        id={params?.row?.id}
-                     />
-                     <button
-                        type="submit"
-                        className="bg-primary-blue p-2 text-white font-medium rounded shadow hover:shadow-lg"
-                        onClick={() => {
-                           setOpenModel(true);
-                           setBillData(params?.row?.allOrderData);
-                        }}
-                     >
-                        <DescriptionIcon /> Generate Invoice
-                     </button>
-                  </div>
-               );
-            },
+      {
+         field: "actions",
+         headerName: "Actions",
+         minWidth: 280,
+         flex: 0.3,
+         type: "number",
+         sortable: false,
+         renderCell: (params) => {
+            return (
+               <div className="flex gap-4">
+                  <Actions
+                     editRoute={"order"}
+                     id={params?.row?.id}
+                  />
+                  <button
+                     type="submit"
+                     className="bg-blue-400 p-1 text-white font-medium rounded shadow hover:shadow-lg"
+                     onClick={() => {
+                        setOpenModel(true);
+                        setBillData(params?.row?.allOrderData);
+                     }}
+                  >
+                     <DescriptionIcon /> Generate Invoice
+                  </button>
+               </div>
+            );
          },
-      ] : [])
+      },
 
    ];
 
    const rows = order.map((item) => ({
-      id: item._id,
-      itemsQty: item?.orderItems?.length,
-      amount: item?.totalPrice,
+      id: item.orderId,
+      itemsQty: item?.cartItems?.length,
+      amount: item?.totalAmount,
       orderOn: formatDate(item?.createdAt),
       status: item?.orderStatus,
       allOrderData: item,

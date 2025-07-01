@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { adminCommunication } from '../service/adminCommunication';
-import { enqueueSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from 'cookies-next';
 
@@ -39,6 +39,7 @@ const LogInIcon = () => (
 
 const LoginPage = () => {
     // State variables for username, password, and potential error message
+    const { enqueueSnackbar } = useSnackbar();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -52,20 +53,20 @@ const LoginPage = () => {
         // Clear any previous errors
         setError('');
         setLoading(true); // Set loading to true when form is submitted
-
-        console.log('Attempting to log in with:', { username, password });
         const dataToSend = {
             userName: username,
             password
         }
         try {
             const response = await adminCommunication.login(dataToSend);
-            // enqueueSnackbar("Login Successful", { variant: "success" });
+            enqueueSnackbar("Login Successful", { variant: "success" });
+            console.log(response)
             if (response?.data?.userDetails?.userType === "admin") {
                 setCookie(tokenName, response?.data?.token);
                 setCookie(adminDetails, response?.data?.userDetails);
                 navigate("/admin/dashboard");
             } else {
+                enqueueSnackbar("Try Again", { variant: "success" });
                 // add user data in  the user state of redux
                 // dispatch(loginSuccess(serverResponse?.data?.user));
                 // let userDetails = {
