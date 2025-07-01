@@ -21,7 +21,7 @@ const products = [
     { id: '7', name: 'Hdd', imageUrl: hdd, price: 8.00, originalPrice: 10.00, description: 'Handmade soap bar with natural ingredients and a refreshing lavender scent.' },
     { id: '8', name: 'Designer Backpack', imageUrl: 'https://placehold.co/400x300/F0FFF0/000000?text=Backpack', price: 99.00, originalPrice: 130.00, description: 'Ergonomic and spacious backpack, ideal for daily commute or weekend trips. Features multiple compartments.' },
     { id: '9', name: 'Succulent Plant', imageUrl: 'https://placehold.co/220x280/F5FFFA/000000?text=Plant', price: 15.00, originalPrice: 20.00, description: 'Low-maintenance succulent plant, a perfect addition to any desk or shelf. Comes in a decorative pot.' },
-    { id: '10', name: 'Noise-Cancelling Headphones', imageUrl: headset, price: 199.99, originalPrice: 249.99, description: 'Premium noise-cancelling headphones for an immersive audio experience. Long-lasting battery life.' },
+    { id: 'E685d0cf81', name: 'Noise-Cancelling Headphones', imageUrl: headset, price: 199.99, originalPrice: 249.99, description: 'Premium noise-cancelling headphones for an immersive audio experience. Long-lasting battery life.' },
 ];
 
 const ProductDetailsPage = () => {

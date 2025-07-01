@@ -1,11 +1,6 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
 
-
-// const ADMIN_TOKEN = import.meta.env.VITE_APP_ADMIN_TOKENNAME
-// const ADMINDETAILS = import.meta.env.VITE_APP_ADMINDETAILS
-// const DEPT_TOKENNAME = import.meta.env.VITE_APP_DEPT_TOKENNAME
-// const DEPTDETAILS = import.meta.env.VITE_APP_DEPTDETAILS
 const nodeEnvironment = import.meta.env.VITE_APP_NODE_ENV
 const serverUrl = import.meta.env.VITE_APP_NODE_URL;
 const tokenName = import.meta.env.VITE_APP_ADMIN_TOKENNAME;
@@ -101,7 +96,7 @@ export const adminCommunication = {
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return axios.get(`${getServerUrl()}/api/v1/admin/users`, config)
+            return axios.get(`${getServerUrl()}/api/users/users`, config)
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }
@@ -306,7 +301,7 @@ export const adminCommunication = {
                 }
             }
 
-            return axios.get(`${getServerUrl()}/api/v1/admin/orders`, config);
+            return axios.get(`${getServerUrl()}/api/order/orders`, config);
 
         } catch (error) {
             console.error(error?.message)
@@ -342,7 +337,7 @@ export const adminCommunication = {
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return await axios.get(`${getServerUrl()}/api/v1/order/${id}`, config);
+            return await axios.post(`${getServerUrl()}/api/order/order-id`, id, config);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }

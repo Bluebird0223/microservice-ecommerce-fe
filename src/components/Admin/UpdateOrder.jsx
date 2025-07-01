@@ -23,9 +23,10 @@ const UpdateOrder = () => {
     const getOrderDetails = async () => {
         try {
             setLoading(true)
-            const response = await adminCommunication.getOrderById(params.id);
-            if (response?.data?.success) {
-                setOrder(response?.data?.order);
+            let dataToSend = { orderId: params.id }
+            const response = await adminCommunication.getOrderById(dataToSend);
+            if (response?.status === 200) {
+                setOrder(response?.data?.existingOrder);
             }
         } catch (error) {
             enqueueSnackbar("Error fetching products: " + error.message, { variant: "error" });
@@ -35,8 +36,6 @@ const UpdateOrder = () => {
     }
 
     useEffect(() => {
-
-
         getOrderDetails();
     }, [params.id, enqueueSnackbar]);
 
@@ -58,9 +57,9 @@ const UpdateOrder = () => {
         } catch (err) {
             enqueueSnackbar(`Error: ${err.message}`, { variant: "error" });
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
-        setLoading(false); 
+        setLoading(false);
     }
 
     return (

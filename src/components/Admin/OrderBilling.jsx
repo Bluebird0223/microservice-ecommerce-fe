@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { formatDate } from '../../utils/functions';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import logo from "../../assets/images/home/Logo.png";
+// import logo from "../../assets/images/home/Logo.png";
 import DownloadIcon from "@mui/icons-material/Download";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 
@@ -92,7 +92,7 @@ export default function OrderBilling({billData}) {
     <div className="w-[70%] h-[90vh] lg:w-[70%] md:w-[90%] bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
     <div className="w-[100%] h-[90%] overflow-y-auto bg-white" ref={contentRef}>
        <div className="flex justify-between items-center bg-gray-200 px-10 py-5 ">
-          <img src={logo} alt="logo" className="w-[100px] " />
+         {/* <img src={logo} alt="logo" className="w-[100px] " />*/} 
           <div>
              <h1 className="text-4xl font-bold text-gray-500 text-end">
                 Invoice

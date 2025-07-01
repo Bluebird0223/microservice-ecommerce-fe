@@ -8,7 +8,7 @@ import { adminCommunication } from '../../service/adminCommunication';
 import defaultImage from '../../assets/images/blank_img.jpeg';
 import Switch from '@mui/material/Switch';
 import Actions from './Actions';
-import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
+// import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
 
 const Category = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -17,7 +17,7 @@ const Category = () => {
     const [permission, setPermission] = useState('')
 
     useEffect(() => {
-        setPermission(checkDeptTabAccess('category'))
+        // setPermission(checkDeptTabAccess('category'))
 
         const fetchCategories = async () => {
             try {
@@ -77,42 +77,38 @@ const Category = () => {
             minWidth: 100,
             flex: 1,
         },
-        ...(permission?.permission !== 'read' ? [
-            {
-                field: "status",
-                headerName: "Status",
-                minWidth: 100,
-                flex: 1,
-                align: "center",
-                headerAlign: "center",
-                sortable: false,
-                renderCell: (params) => {
-                    return (
-                        <Switch
-                            checked={params.row.isActive}
-                            onChange={(e) => handleStatusChange(params.row.id, e.target.checked)}
-                            inputProps={{ 'aria-label': 'Status Toggle' }}
-                        />
-                    );
-                },
-            }
-        ] : []),
-        ...(permission?.permission !== 'read' ? [
-            {
-                field: "actions",
-                headerName: "Actions",
-                minWidth: 100,
-                flex: 1,
-                align: "left",
-                headerAlign: "left",
-                sortable: false,
-                renderCell: (params) => {
-                    return (
-                        <Actions editRoute={"category"} id={params.row.id} />
-                    );
-                },
-            }
-        ] : []),
+        {
+            field: "status",
+            headerName: "Status",
+            minWidth: 100,
+            flex: 1,
+            align: "center",
+            headerAlign: "center",
+            sortable: false,
+            renderCell: (params) => {
+                return (
+                    <Switch
+                        checked={params.row.isActive}
+                        onChange={(e) => handleStatusChange(params.row.id, e.target.checked)}
+                        inputProps={{ 'aria-label': 'Status Toggle' }}
+                    />
+                );
+            },
+        },
+        {
+            field: "actions",
+            headerName: "Actions",
+            minWidth: 100,
+            flex: 1,
+            align: "left",
+            headerAlign: "left",
+            sortable: false,
+            renderCell: (params) => {
+                return (
+                    <Actions editRoute={"category"} id={params.row.id} />
+                );
+            },
+        }
     ];
     const rows = categories.map((item) => ({
         id: item._id || item.id,
