@@ -4,7 +4,7 @@ import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from 'cookies-next';
 
-const tokenName = import.meta.env.VITE_APP_ADMIN_TOKENNAME;
+const tokenName = import.meta.env.VITE_APP_TOKENNAME;
 const adminDetails = import.meta.env.VITE_APP_ADMINDETAILS;
 
 // You would typically import icons like this if using lucide-react directly
@@ -37,7 +37,7 @@ const LogInIcon = () => (
 );
 
 
-const LoginPage = () => {
+const PublicLogin = () => {
     // State variables for username, password, and potential error message
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -53,7 +53,6 @@ const LoginPage = () => {
         setError('');
         setLoading(true); // Set loading to true when form is submitted
 
-        console.log('Attempting to log in with:', { username, password });
         const dataToSend = {
             userName: username,
             password
@@ -186,4 +185,4 @@ const LoginPage = () => {
 };
 
 
-export default LoginPage
+export default PublicLogin

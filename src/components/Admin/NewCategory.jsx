@@ -44,6 +44,7 @@ const AddCategory = () => {
             setLoading(true);
 
             const serverResponse = await adminCommunication.createCategory(formData);
+            console.log(serverResponse)
             if (serverResponse?.data?.success) {
                 enqueueSnackbar("Category Created Successfully", { variant: "success" });
                 navigate("/admin/category");

@@ -14,13 +14,21 @@ import LoginPage from './components/Login';
 import Dashboard from './components/Admin/Dashboard'
 import MainData from './components/Admin/MainData'
 import OrderTable from './components/Admin/OrderTable'
+import Category from './components/Admin/Category'
+import AddCategory from './components/Admin/NewCategory'
+import UpdateCategory from './components/Admin/UpdateCategory'
+import ProductTable from './components/Admin/ProductTable'
 
 export default function App() {
   const location = useLocation();
   // Define an array of paths where the BottomNavBar should NOT be shown
   const noBottomNavPaths = [
     '/login',
-    '/admin/dashboard'
+    '/admin/dashboard',
+    '/admin/category',
+    '/admin/category/:id',
+    '/admin/product',
+    '/admin/product/:id'
   ];
 
   // Check if the current path is in the noBottomNavPaths array
@@ -52,6 +60,60 @@ export default function App() {
             </AdminProtectedRoute>
           }
           ></Route>
+          <Route
+            path="/admin/category"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={3}><Category /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/category/:id"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={3}><UpdateCategory /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/new_category"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={3}><AddCategory /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+
+          <Route
+            path="/admin/products"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}><ProductTable /></Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+
+          {/* <Route
+            path="/admin/new_product"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}>
+                  <NewProduct />
+                </Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/product/:id"
+            element={
+              <AdminProtectedRoute>
+                <Dashboard activeTab={2}>
+                  <UpdateProduct />
+                </Dashboard>
+              </AdminProtectedRoute>
+            }
+          ></Route> */}
 
         </Routes>
       </AnimatePresence>
@@ -77,97 +139,7 @@ export default function App() {
         }
       ></Route>
 
-      <Route
-        path="/admin/products"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={2}>
-              <ProductTable />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-
-      <Route
-        path="/admin/new_product"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={2}>
-              <NewProduct />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/product/:id"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={2}>
-              <UpdateProduct />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/category"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={3}>
-              <Category />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/category/:id"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={3}>
-              <UpdateCategory />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/new_category"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={3}>
-              <AddCategory />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/subcategory"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={4}>
-              <Subcategory />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/new_subcategory"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={4}>
-              <AddSubcategory />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path="/admin/subcategory/:id"
-        element={
-          <AdminProtectedRoute>
-            <Dashboard activeTab={4}>
-              <UpdateSubcategory />
-            </Dashboard>
-          </AdminProtectedRoute>
-        }
-      ></Route>
+     
 
       <Route
         path="/admin/users"

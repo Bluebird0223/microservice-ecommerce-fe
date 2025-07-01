@@ -43,7 +43,7 @@ export const adminCommunication = {
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return axios.get(`${getServerUrl()}/api/v1/me`, config)
+            return axios.get(`${getServerUrl()}/api/me`, config)
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }
@@ -178,7 +178,7 @@ export const adminCommunication = {
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return axios.get(`${getServerUrl()}/api/v1/admin/products`, config)
+            return axios.get(`${getServerUrl()}/api/product/product`, config)
         } catch (error) {
             console.error(error?.message)
         }
@@ -186,7 +186,7 @@ export const adminCommunication = {
     getAllCategory: async function () {
         try {
             const config = { headers: { "Content-Type": "application/json" } }
-            return axios.get(`${getServerUrl()}/api/v1/product/category`, config)
+            return axios.get(`${getServerUrl()}/api/category/category`, config)
         } catch (error) {
             console.error(error?.message)
         }
@@ -202,7 +202,7 @@ export const adminCommunication = {
     createCategory: async function (categoryData) {
         try {
             const config = { headers: { "Content-Type": "application/json" } }
-            return axios.post(`${getServerUrl()}/api/v1/product/category/new`, categoryData, config);
+            return axios.post(`${getServerUrl()}/api/category/create-category`, categoryData, config);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }
@@ -234,7 +234,7 @@ export const adminCommunication = {
     },
     getCategoryById: async function (id) {
         try {
-            return await axios.get(`${getServerUrl()}/api/v1/product/category/${id}`);
+            return await axios.get(`${getServerUrl()}/api/category/category-id${id}`);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }

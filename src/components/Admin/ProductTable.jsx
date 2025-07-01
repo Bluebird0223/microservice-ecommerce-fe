@@ -7,7 +7,7 @@ import Actions from './Actions';
 import MetaData from '../Layouts/MetaData';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import { adminCommunication } from '../../service/adminCommunication';
-import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
+// import { checkDeptTabAccess } from '../../utils/checkDeptTabAccess';
 
 const ProductTable = () => {
 
@@ -19,13 +19,13 @@ const ProductTable = () => {
 
     useEffect(() => {
 
-        setPermission(checkDeptTabAccess('category'))
+        // setPermission(checkDeptTabAccess('category'))
 
         const fetchProducts = async () => {
             setLoading(true)
             try {
                 const response = await adminCommunication.getAdminProducts();
-                if (response?.data?.success) {
+                if (response?.status===200) {
                     setProducts(response?.data?.products);
                 } else {
                     enqueueSnackbar("Failed to fetch products.", { variant: "error" });
@@ -149,13 +149,13 @@ const ProductTable = () => {
     ];
 
     const rows = products.map((item) => ({
-        id: item._id,
-        name: item.name,
-        image: item.images[0]?.url,
-        category: item.category?.name,
-        stock: item.stock,
+        id: item.productId,
+        name: item.productName,
+        image: item.productPicture,
+        category: item.categoryId,
+        stock: item.stockQuantity,
         price: item.price,
-        cprice: item.cuttedPrice,
+        cprice: item.discountPrice,
         rating: item.ratings,
     }));
 

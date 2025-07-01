@@ -16,8 +16,6 @@ const UpdateCategory = () => {
 
     const [loading, setLoading] = useState(false)
     const [name, setName] = useState("");
-    const [logo, setLogo] = useState("");
-    const [logoPreview, setLogoPreview] = useState("");
     const [category, setCategory] = useState(null)
 
     const handleLogoChange = (e) => {
@@ -35,16 +33,11 @@ const UpdateCategory = () => {
 
     const updateCategorySubmitHandler = async (e) => {
         e.preventDefault();
-        if (!logo) {
-            enqueueSnackbar("Add Category image", { variant: "warning" });
-            return;
-        }
 
         const formData = new FormData();
 
         formData.set("id", params.id)
         formData.set("name", name);
-        formData.set("image", logo);
         try {
             setLoading(true)
             const serverResponse = await adminCommunication.updateCategory(formData);
@@ -68,13 +61,11 @@ const UpdateCategory = () => {
         const fetchCategoryDetails = async () => {
             try {
                 const response = await adminCommunication.getCategoryById(categoryId);
+                console.log(response)
                 if (response?.data?.success) {
                     const fetchedCategory = response?.data?.category;
                     setCategory(fetchedCategory);
                     setName(fetchedCategory.name);
-                    if (fetchedCategory.image && fetchedCategory.image.length > 0) {
-                        setLogoPreview(fetchedCategory.image[0].url);
-                    }
                 }
             } catch (error) {
                 enqueueSnackbar("Error fetching products: " + error.message, { variant: "error" });
@@ -107,9 +98,9 @@ const UpdateCategory = () => {
                             <h2 className="font-medium">Category Image</h2>
                             <div className="flex justify-between gap-4 items-start">
                                 <div className="w-24 h-25 flex items-center justify-center border rounded-lg p-1">
-                                    {!logoPreview ? <ImageIcon /> :
+                                    {/* {!logoPreview ? <ImageIcon /> :
                                         <img draggable="false" src={logoPreview} alt="Brand Logo" className="w-full h-full object-contain" />
-                                    }
+                                    } */}
                                 </div>
                                 <label className="rounded bg-gray-400 text-center cursor-pointer text-white py-2 px-2.5 shadow hover:shadow-lg">
                                     <input
