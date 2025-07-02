@@ -65,16 +65,16 @@ const NewProduct = () => {
     // }
 
     const handleLogoChange = (e) => {
+        const file = e.target.files[0];
+        setLogo(file);
         const reader = new FileReader();
-
         reader.onload = () => {
             if (reader.readyState === 2) {
                 setLogoPreview(reader.result);
-                setLogo(reader.result);
             }
         };
-        reader.readAsDataURL(e.target.files[0]);
-    }
+        reader.readAsDataURL(file);
+    };
 
     const handleProductImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -104,35 +104,35 @@ const NewProduct = () => {
         //     return;
         // }
         if (!logo) {
-            enqueueSnackbar("Add Thumbnail image", { variant: "warning" });
+            enqueueSnackbar("Add product image", { variant: "warning" });
             return;
         }
         // if (specs.length <= 1) {
         //     enqueueSnackbar("Add Minimum 2 Specifications", { variant: "warning" });
         //     return;
         // }
-        if (images.length <= 0) {
-            enqueueSnackbar("Add Product Images", { variant: "warning" });
-            return;
-        }
+        // if (images.length <= 0) {
+        //     enqueueSnackbar("Add Product Images", { variant: "warning" });
+        //     return;
+        // }
         try {
             setLoading(true)
-            const dataToSend = {
+
+            const formData = new FormData();
+            formData.append("productPicture", logo);
+            formData.append("data", JSON.stringify({
                 categoryId: category,
                 productName: name,
-                description: description,
-                price: price.toString(),
-                discountPrice: cuttedPrice.toString(),
-                productPicture: logo, // base64 or URL
-                brand: brand,
+                description,
+                price,
+                discountPrice: cuttedPrice,
                 stockQuantity: Number(stock),
                 warranty: warranty.toString(),
-                // Optionally add: ratings, reviews, createdBy, createdAt, updatedAt
-            };
+                brand: brand
+            }));
 
-            const serverResponse = await adminCommunication.createProduct(dataToSend);
-            console.log(serverResponse)
-            if (serverResponse?.data?.success) {
+            const serverResponse = await adminCommunication.createProduct(formData);
+            if (serverResponse?.status===201) {
                 navigate("/admin/products");
             } else {
                 enqueueSnackbar("Failed to create new product", { variant: "error" });
@@ -145,23 +145,23 @@ const NewProduct = () => {
         setLoading(false)
 
     }
-    const fetchSubcategory = async () => {
-        try {
-            const response = await adminCommunication.getAllSubCategory();
-            if (response?.data?.success) {
-                setSubCategoriesList(response?.data?.subcategory);
-            }
-        } catch (error) {
-            enqueueSnackbar("Error fetching subcategory: " + error.message, { variant: "error" });
-        }
-    };
+    // const fetchSubcategory = async () => {
+    //     try {
+    //         const response = await adminCommunication.getAllSubCategory();
+    //         if (response?.data?.success) {
+    //             setSubCategoriesList(response?.data?.subcategory);
+    //         }
+    //     } catch (error) {
+    //         enqueueSnackbar("Error fetching subcategory: " + error.message, { variant: "error" });
+    //     }
+    // };
 
     // Fetch all categories for the dropdown
     const fetchCategories = async () => {
         try {
             const response = await adminCommunication.getAllCategory();
             console.log(response)
-            if (response?.status===200) {
+            if (response?.status === 200) {
                 setCategoriesList(response?.data?.categories);
             }
         } catch (error) {
@@ -172,7 +172,7 @@ const NewProduct = () => {
 
     useEffect(() => {
 
-        fetchSubcategory();
+        // fetchSubcategory();
         fetchCategories();
     }, [enqueueSnackbar]);
 
@@ -294,6 +294,20 @@ const NewProduct = () => {
                             required
                             value={warranty}
                             onChange={(e) => setWarranty(e.target.value)}
+                        />
+                        <TextField
+                            label="Brand"
+                            type="text"
+                            variant="outlined"
+                            size="small"
+                            InputProps={{
+                                inputProps: {
+                                    min: 0
+                                }
+                            }}
+                            required
+                            value={brand}
+                            onChange={(e) => setBrand(e.target.value)}
                         />
                     </div>
 

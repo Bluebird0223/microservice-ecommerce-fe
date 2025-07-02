@@ -117,16 +117,16 @@ const OrderTable = () => {
                      editRoute={"order"}
                      id={params?.row?.id}
                   />
-                  <button
+                  {/* <button
                      type="submit"
                      className="bg-blue-400 p-1 text-white font-medium rounded shadow hover:shadow-lg"
                      onClick={() => {
                         setOpenModel(true);
                         setBillData(params?.row?.allOrderData);
                      }}
-                  >
-                     <DescriptionIcon /> Generate Invoice
-                  </button>
+                  > */}
+                     {/* <DescriptionIcon /> Generate Invoice */}
+                  {/* </button> */}
                </div>
             );
          },

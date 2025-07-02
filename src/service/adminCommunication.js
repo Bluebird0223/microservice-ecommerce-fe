@@ -140,8 +140,7 @@ export const adminCommunication = {
     },
     createProduct: async function (productData) {
         try {
-            console.log(getCookie(token))
-            return axios.post(`${getServerUrl()}/api/v1/admin/product/new`, productData, {
+            return axios.post(`${getServerUrl()}/api/product/create-product`, productData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${getCookie(token)}`
@@ -152,15 +151,15 @@ export const adminCommunication = {
         }
 
     },
-    updateProduct: async function (productData) {
+    updateProduct: async function (isFileAttached, productData) {
         try {
             const config = {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": isFileAttached ? "multipart/form-data" : "application/json",
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return await axios.post(`${getServerUrl()}/api/v1/admin/product/update`, productData, config)
+            return await axios.put(`${getServerUrl()}/api/product/update-product?isFileAttached=${isFileAttached ? 'true' : 'false'}`, productData, config)
         } catch (error) {
             console.error(error?.message)
         }
@@ -230,7 +229,7 @@ export const adminCommunication = {
     getCategoryById: async function (id) {
         try {
             const config = { headers: { "Content-Type": "application/json" } }
-            return await axios.post(`${getServerUrl()}/api/category/category-id`,id,config);
+            return await axios.post(`${getServerUrl()}/api/category/category-id`, id, config);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }
@@ -317,7 +316,7 @@ export const adminCommunication = {
                     Authorization: `Bearer ${getCookie(token)}`
                 }
             }
-            return axios.put(`${getServerUrl()}/api/v1/admin/order/status`, dataToUpdate, config);
+            return axios.post(`${getServerUrl()}/api/order/update-order-status`, dataToUpdate, config);
         } catch (error) {
             return { data: { success: false, message: error.message } };
         }

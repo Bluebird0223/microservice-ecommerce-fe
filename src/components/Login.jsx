@@ -83,7 +83,7 @@ const LoginPage = () => {
                 //     process.env.REACT_APP_TOKENNAME,
                 //     serverResponse?.data?.token
                 // );
-                navigate("/");
+                navigate("/home");
             }
         } catch (error) {
             console.log(error)
